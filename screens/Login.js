@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function HomeScreen() {
+function LogIn() {
   const api = create({
     baseURL: "http://streaming.nexlesoft.com:3001",
     headers: { Accept: "application/vnd.github.v3+json" },
@@ -76,9 +76,7 @@ function HomeScreen() {
       </View>
       <View className="mx-5 mt-10">
         <Text className="text-lg">Adventure starts here</Text>
-        <Text className="text-base font-light">
-          Make your app management easy and fun
-        </Text>
+        <Text className="text-base font-light">Log IN</Text>
 
         <Formik
           initialValues={{
@@ -95,16 +93,15 @@ function HomeScreen() {
               .required("Email is not empty"),
           })}
           onSubmit={async (values) => {
-            api
-              .post("/auth/signup", values, {
-                headers: { "x-gigawatts": "1.21" },
-              })
-              .then((res) => {
-                showToast("Create account successfully!");
-                setTimeOut(() => {
-                  navigation.navigate("LogIn");
-                }, 3000);
-              });
+            navigation.navigate("LogIn");
+            // api
+            //   .post("/auth/signup", values, {
+            //     headers: { "x-gigawatts": "1.21" },
+            //   })
+            //   .then((res) => {
+            //     showToast("Create account successfully!");
+            //     navigation.navigate("LogIn");
+            //   });
           }}
         >
           {({
@@ -209,4 +206,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default LogIn;
