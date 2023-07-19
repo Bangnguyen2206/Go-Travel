@@ -25,8 +25,12 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 1,
-    padding: 10,
+    padding: 0,
     marginVertical: 10,
+    borderColor: "purple",
+    color: "black",
+    borderRadius: 5,
+    paddingHorizontal: 7,
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -72,17 +76,20 @@ function LogIn() {
           animation="fadeIn"
           easing="ease-in-out"
           source={LogInImage}
-          className="w-full h-[400px]"
+          className="w-full h-[300px]"
         ></Image>
-        <SparklesIcon
+        {/* <SparklesIcon
           className="absolute top-0 left-0"
           onPress={() => navigation.navigate("Home")}
-        />
+        /> */}
       </View>
-      <View className="mx-5 mt-10">
-        <Text className="text-lg">Adventure starts here</Text>
-        <Text className="text-base font-light">Log IN</Text>
-
+      <View className="bg-white py-4 px-10 h-full blur-sm">
+        <Text className="text-xl mb-2">
+          Welcome to Entrance Test Interview!
+        </Text>
+        <Text className="text-base font-light">
+          Please sign-in to your account adn start the adventure
+        </Text>
         <Formik
           initialValues={{
             password: "",
@@ -109,7 +116,7 @@ function LogIn() {
           }) => (
             <View className="my-2">
               <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Email <Text className="text-red-600">*</Text>
+                Email
               </Text>
               <TextInput
                 style={styles.input}
@@ -126,8 +133,8 @@ function LogIn() {
                   {errors.email}
                 </Text>
               )}
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Password <Text className="text-red-600">*</Text>
+              <Text className="block text-lg mt-5 font-medium text-gray-500 dark:text-white">
+                Password
               </Text>
               <TextInput
                 style={styles.input}
@@ -146,7 +153,7 @@ function LogIn() {
                 </Text>
               )}
               <View className="mt-7">
-                <Button onPress={handleSubmit} title="Sign Up" color="purple" />
+                <Button onPress={handleSubmit} title="Login" color="purple" />
               </View>
             </View>
           )}
