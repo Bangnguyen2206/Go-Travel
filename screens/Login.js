@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BgImage } from "../assets";
+import { LogInImage } from "../assets";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
 import { CheckBox } from "react-native-elements";
@@ -19,6 +19,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { create } from "apisauce";
+import { SparklesIcon } from "react-native-heroicons/solid";
 
 const styles = StyleSheet.create({
   input: {
@@ -65,13 +66,17 @@ function LogIn() {
     email: "",
   });
   return (
-    <SafeAreaView className="bg-white flex-1 relative">
+    <View className="relative w-full h-full">
       <View>
-        <Animatable.Image
+        <Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={BgImage}
-          className="w-full h-[180px] object-cover"
+          source={LogInImage}
+          className="w-full h-[400px]"
+        ></Image>
+        <SparklesIcon
+          className="absolute top-0 left-0"
+          onPress={() => navigation.navigate("Home")}
         />
       </View>
       <View className="mx-5 mt-10">
@@ -80,8 +85,6 @@ function LogIn() {
 
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
             password: "",
             email: "",
           }}
@@ -93,15 +96,7 @@ function LogIn() {
               .required("Email is not empty"),
           })}
           onSubmit={async (values) => {
-            navigation.navigate("LogIn");
-            // api
-            //   .post("/auth/signup", values, {
-            //     headers: { "x-gigawatts": "1.21" },
-            //   })
-            //   .then((res) => {
-            //     showToast("Create account successfully!");
-            //     navigation.navigate("LogIn");
-            //   });
+            console.log(values);
           }}
         >
           {({
@@ -113,42 +108,6 @@ function LogIn() {
             touched,
           }) => (
             <View className="my-2">
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                First name <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("firstName")}
-                onBlur={handleBlur("firstName")}
-                value={values.firstName}
-                placeholder="Enter your first name..."
-              />
-              {touched.firstName && errors.firstName && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.firstName}
-                </Text>
-              )}
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Last name <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("lastName")}
-                onBlur={handleBlur("lastName")}
-                value={values.lastName}
-                placeholder="Enter your last name..."
-              />
-              {touched.lastName && errors.lastName && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.lastName}
-                </Text>
-              )}
               <Text className="block text-lg font-medium text-gray-500 dark:text-white">
                 Email <Text className="text-red-600">*</Text>
               </Text>
@@ -202,7 +161,7 @@ function LogIn() {
           </Text>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

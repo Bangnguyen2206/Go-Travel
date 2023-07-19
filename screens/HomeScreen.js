@@ -101,7 +101,7 @@ function HomeScreen() {
               })
               .then((res) => {
                 showToast("Create account successfully!");
-                setTimeOut(() => {
+                setTimeout(() => {
                   navigation.navigate("LogIn");
                 }, 3000);
               });
