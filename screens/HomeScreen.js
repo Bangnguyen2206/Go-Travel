@@ -1,10 +1,37 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useLayoutEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { HeroImage } from "../assets";
+import { BgImage } from "../assets";
 import * as Animatable from "react-native-animatable";
+import { CheckBox } from "react-native-elements";
+import { Button } from "@rneui/themed";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+} from "react-native";
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderWidth: 1,
+    padding: 10,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "left",
+  },
+  label: {
+    margin: 8,
+  },
+});
 
 function HomeScreen() {
   const navigation = useNavigation();
@@ -15,45 +42,105 @@ function HomeScreen() {
   }, []);
   return (
     <SafeAreaView className="bg-white flex-1 relative">
-      {/* First Section */}
-      <View className="flex-row px-6 mt-8 items-center space-x-2">
-        <View className="w-16 h-16 bg-black rounded-full items-center justify-center">
-          <Text className="text-[#4DABB7] text-3xl font-semibold">Go</Text>
-        </View>
-        <Text className="text-[#2A2B4B] text-3xl font-semibold">Travel</Text>
-      </View>
-      {/* Second Section */}
-      <View className="px-6 mt-8 space-y-3">
-        <Text className="text-[#3C6072] text-[42px]">Enjoy the trip with</Text>
-        <Text className="text-[#00BCC9] text-[38px] font-bold">
-          Good Moments
-        </Text>
-        <Text className="text-[#3C6072] text-base">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique
-          at mi et ultrices.
-        </Text>
-      </View>
-      {/* Circle Section */}
-      <View className="w-[400px] h-[400px] bg-[#00BCC9] rounded-full absolute bottom-36 -right-36"></View>
-      <View className="w-[400px] h-[400px] bg-[#E99265] rounded-full absolute -bottom-28 -left-36"></View>
       {/* Image container */}
-      <View className="flex-1 relative items-center justify-center">
+      <View>
         <Animatable.Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={HeroImage}
-          className="w-full h-full object-cover mt-20"
+          source={BgImage}
+          className="w-full h-[180px] object-cover"
         />
-        <TouchableOpacity className="absolute bottom-20 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#00BCC9] rounded-full items-center justify-center">
-          <Animatable.View
-            animation={"pulse"}
-            easing="ease-in-out"
-            iterationCount={"infinite"}
-            className="w-20 h-20 items-center justify-center rounded-full bg-[#00BCC9]"
+      </View>
+      <View className="mx-5 mt-3">
+        <Text className="text-lg">Adventure starts here</Text>
+        <Text className="text-base font-light">
+          Make your app management easy and fun
+        </Text>
+        <View className="my-2">
+          <Text
+            for="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            <Text className="text-gray-50 text-[36px] font-semibold">Go</Text>
-          </Animatable.View>
-        </TouchableOpacity>
+            First name
+          </Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={onChangeNumber}
+            value={"123"}
+            placeholder="useless placeholder"
+            keyboardType="numeric"
+          />
+        </View>
+        <View className="my-2">
+          <Text
+            for="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Last name
+          </Text>
+          <TextInput
+            style={styles.input}
+            value={"123"}
+            placeholder="useless placeholder"
+            keyboardType="numeric"
+          />
+        </View>
+        <View className="my-2">
+          <Text
+            for="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Email
+          </Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={onChangeNumber}
+            value={"123"}
+            placeholder="useless placeholder"
+            keyboardType="numeric"
+          />
+        </View>
+        <View className="my-2">
+          <Text
+            for="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Password
+          </Text>
+          <TextInput
+            style={styles.input}
+            // onChangeText={onChangeNumber}
+            value={"123"}
+            placeholder="useless placeholder"
+            keyboardType="numeric"
+            secureTextEntry={true}
+          />
+        </View>
+        <View className="mt-2 flex-1 justify-start items-center flex-row">
+          <CheckBox
+            title="I agree to privacy policy & terms"
+            checked={true}
+            containerStyle={{
+              margin: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              backgroundColor: "transparent",
+              border: "none",
+            }}
+            // onPress={() => setCheck1(!check1)}
+          />
+        </View>
+        <View className="mt-7">
+          <Button color="purple">Secondary</Button>
+        </View>
+        <View className="mt-3 my-5 flex justify-center items-center flex-row">
+          <Text className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+            Already have an account?
+          </Text>
+          <Text className="block mb-2 mx-2 text-lg font-medium text-purple-900 dark:text-white">
+            Sign in instead
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
