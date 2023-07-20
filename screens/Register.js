@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 
 import CustomInput from "../components/CustomInput/CustomInput";
@@ -61,11 +62,11 @@ function HomeScreen() {
     email: "",
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
-  }, []);
+  }, [isLoading]);
 
   const showToast = (message) => {
     Toast.show({
@@ -105,8 +106,9 @@ function HomeScreen() {
               .email("Invalid email")
               .required("Email is not empty"),
           })}
-          onSubmit={async (values) => {
+          onSubmit={async (values, { resetForm }) => {
             dispatch(registerAccount(values));
+            resetForm();
           }}
         >
           {({
@@ -172,11 +174,21 @@ function HomeScreen() {
                 <Button
                   onPress={handleSubmit}
                   color={"#a78bfa"}
-                  title="Sign up"
+                  // title="Sign up"
                   containerStyle={{
                     borderRadius: "5px",
                   }}
-                />
+                  disabled={isLoading}
+                >
+                  {isLoading && (
+                    <ActivityIndicator
+                      size="small"
+                      color="#0000ff"
+                      className="mx-3"
+                    />
+                  )}
+                  {"Sign up"}
+                </Button>
               </View>
             </View>
           )}

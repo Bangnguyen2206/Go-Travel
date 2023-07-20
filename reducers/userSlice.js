@@ -1,22 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import apiInstance from "../helpers/httpClient";
 
-export const registerAccount = createAsyncThunk(
-  "register",
-  async ({ lastName, firstName, password, email }) => {
-    apiInstance
-      .post(
-        "/auth/signup",
-        { lastName, firstName, password, email },
-        {
-          headers: { "x-gigawatts": "1.21" },
-        }
-      )
-      .then((res) => {
-        console.log("123", res);
-      });
-  }
-);
+export const registerAccount = createAsyncThunk("register", async (values) => {
+  apiInstance
+    .post("/auth/signup", values, {
+      headers: { "x-gigawatts": "1.21" },
+    })
+    .then((res) => {
+      console.log(res);
+    });
+});
 
 export const userSlice = createSlice({
   name: "user",
