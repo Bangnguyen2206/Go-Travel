@@ -26,6 +26,7 @@ import Connect from "../components/ListIcon/Connect";
 import { BgImage } from "../assets";
 import apiInstance from "../helpers/httpClient";
 import { registerAccount } from "../reducers/userSlice";
+import { getDataFromStorage } from "../utils/utils";
 
 const styles = StyleSheet.create({
   input: {
@@ -66,7 +67,12 @@ function HomeScreen() {
     navigation.setOptions({
       headerShown: false,
     });
-  }, [isLoading]);
+    const getData = async () => {
+      const data = await getDataFromStorage("user");
+      console.log(data);
+    };
+    getData();
+  }, []);
 
   const showToast = (message) => {
     Toast.show({
@@ -109,6 +115,10 @@ function HomeScreen() {
           onSubmit={async (values, { resetForm }) => {
             dispatch(registerAccount(values));
             resetForm();
+            showToast("Created account successfully!");
+            setTimeout(() => {
+              navigation.navigate("LogIn");
+            }, 3000);
           }}
         >
           {({
@@ -174,7 +184,6 @@ function HomeScreen() {
                 <Button
                   onPress={handleSubmit}
                   color={"#a78bfa"}
-                  // title="Sign up"
                   containerStyle={{
                     borderRadius: "5px",
                   }}

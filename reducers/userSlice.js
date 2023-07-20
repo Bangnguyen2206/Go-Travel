@@ -1,20 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import apiInstance from "../helpers/httpClient";
+import { setDataToStorage } from "../utils/utils";
 
 export const registerAccount = createAsyncThunk("register", async (values) => {
-  apiInstance
-    .post("/auth/signup", values, {
-      headers: { "x-gigawatts": "1.21" },
-    })
-    .then((res) => {
-      console.log(res);
-    });
+  try {
+    const response = await apiInstance.post("/auth/signup", values);
+    if (response.data) {
+      setDataToStorage("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: {},
     isLoading: false,
   },
   extraReducers: {
