@@ -4,7 +4,6 @@ import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CheckBox } from "react-native-elements";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { create } from "apisauce";
@@ -27,6 +26,7 @@ import apiInstance from "../helpers/httpClient";
 import { BgImage } from "../assets";
 import { registerAccount } from "../reducers/userSlice";
 import { getDataFromStorage } from "../utils/utils";
+import CheckBox from "../components/Checkbox/Checkbox";
 
 const styles = StyleSheet.create({
   input: {
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
 function HomeScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [regulation, setRegulation] = useState(false);
   const { user, isLoading } = useSelector((state) => state.userSlice);
   const [initialState, setInitialState] = useState({
     firstName: "",
@@ -88,7 +89,7 @@ function HomeScreen() {
           animation="fadeIn"
           easing="ease-in-out"
           source={BgImage}
-          className="w-full h-[150px] object-cover"
+          className="w-full h-[110px] object-cover"
         />
       </View>
       <View className="mx-5 mt-5">
@@ -108,16 +109,26 @@ function HomeScreen() {
             firstName: Yup.string().required("Firstname is not empty"),
             lastName: Yup.string().required("Lastname is not empty"),
             email: Yup.string()
-              .email("Invalid email")
-              .required("Email is not empty"),
+              .email("The email is not valid")
+              .required("The email is required"),
+            password: Yup.string()
+              .required("The password is required")
+              .matches(/\w*[a-z]\w*/, "Password is weak")
+              .matches(/\w*[A-Z]\w*/, "Password is fair")
+              .matches(/\d/, "Password is good")
+              .matches(/[!+@#$%^&*()\-_"=+{}; :,<.>]/, "Password is strong"),
           })}
           onSubmit={async (values, { resetForm }) => {
-            dispatch(registerAccount(values));
-            resetForm();
-            showToast("Created account successfully!");
-            setTimeout(() => {
-              navigation.navigate("LogIn");
-            }, 3000);
+            if (regulation) {
+              dispatch(registerAccount(values));
+              resetForm();
+              setRegulation(false);
+              showToast("Created account successfully!");
+              setTimeout(() => {
+                navigation.navigate("LogIn");
+              }, 3000);
+            } else {
+            }
           }}
         >
           {({
@@ -178,6 +189,13 @@ function HomeScreen() {
                 placeholder="Enter your password..."
                 type="password"
               />
+              <View className="my-1">
+                <CheckBox
+                  onPress={() => setRegulation(!regulation)}
+                  title="I agree to privacy policy & terms"
+                  isChecked={regulation}
+                />
+              </View>
               {/* Sign up button */}
               <View className="mt-7">
                 <Button
@@ -190,7 +208,8 @@ function HomeScreen() {
                     errors.email ||
                     errors.firstName ||
                     errors.lastName ||
-                    errors.password
+                    errors.password ||
+                    !regulation
                   }
                 >
                   {isLoading && (
@@ -208,7 +227,7 @@ function HomeScreen() {
         </Formik>
 
         {/* Redirect to login page */}
-        <View className="mt-3 my-5 flex justify-center items-center flex-row">
+        <View className="mt-2 my-2 flex justify-center items-center flex-row">
           <Text className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
             Already have an account?
           </Text>

@@ -3,23 +3,23 @@ import apiInstance from "../helpers/httpClient";
 import { setDataToStorage } from "../utils/utils";
 import { create } from "apisauce";
 
-const accessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjg5ODQzMDY2LCJleHAiOjE2ODk5MzMwNjZ9.yMO-wUJq8wx8gIopSc1rAzRUDu1ELiBW1CFEr1MuomA";
-
-export const getCategories = createAsyncThunk("categories", async () => {
-  const api = create({
-    baseURL: "http://streaming.nexlesoft.com:3001",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  try {
-    const response = await api.get("/categories");
-    return response.data;
-  } catch (err) {
-    console.error(err);
+export const getCategories = createAsyncThunk(
+  "categories",
+  async (accessToken) => {
+    const api = create({
+      baseURL: "http://streaming.nexlesoft.com:3001",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    try {
+      const response = await api.get("/categories");
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
   }
-});
+);
 
 export const categoriesSlice = createSlice({
   name: "categories",

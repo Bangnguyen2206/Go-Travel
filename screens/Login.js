@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 
 function LogIn() {
   const navigation = useNavigation();
+  const [remember, setRemember] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -64,6 +65,7 @@ function LogIn() {
   }, []);
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.userSlice);
+
   const showToast = (message) => {
     Toast.show({
       type: "success",
@@ -75,7 +77,7 @@ function LogIn() {
     password: "",
     email: "",
   });
-  const [music, setMusic] = useState(false);
+
   return (
     <View>
       <View>
@@ -147,9 +149,9 @@ function LogIn() {
               />
               <View className="my-2">
                 <CheckBox
-                  onPress={() => setMusic(!music)}
+                  onPress={() => setRemember(!remember)}
                   title="Remember me"
-                  isChecked={music}
+                  isChecked={remember}
                 />
               </View>
 

@@ -29,10 +29,9 @@ export default function Categories() {
     (state) => state.categoriesSlice
   );
   useEffect(() => {
-    dispatch(getCategories());
     const getData = async () => {
       const data = await getDataFromStorage("accessToken");
-      console.log(data);
+      dispatch(getCategories(data));
     };
     getData();
   }, [dispatch]);
