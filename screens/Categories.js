@@ -43,8 +43,6 @@ export default function Categories() {
     });
     const getData = async () => {
       const data = await getDataFromStorage("accessToken");
-      const sec = await getDataFromStorage("selections");
-      console.log(sec);
       dispatch(getCategories(data));
     };
     getData();
