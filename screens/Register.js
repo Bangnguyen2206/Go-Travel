@@ -9,6 +9,7 @@ import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { create } from "apisauce";
 import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import {
   View,
@@ -23,6 +24,7 @@ import CustomInput from "../components/CustomInput/CustomInput";
 import Connect from "../components/ListIcon/Connect";
 import { BgImage } from "../assets";
 import apiInstance from "../helpers/httpClient";
+import { registerAccount } from "../reducers/userSlice";
 
 const styles = StyleSheet.create({
   input: {
@@ -50,11 +52,21 @@ const styles = StyleSheet.create({
 
 function HomeScreen() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { user, isLoading } = useSelector((state) => state.userSlice);
+  const [initialState, setInitialState] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    email: "",
+  });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+
   const showToast = (message) => {
     Toast.show({
       type: "success",
@@ -62,12 +74,7 @@ function HomeScreen() {
       text2: message,
     });
   };
-  const [initialState, setInitialState] = useState({
-    firstName: "",
-    lastName: "",
-    password: "",
-    email: "",
-  });
+
   return (
     <SafeAreaView className="bg-white flex-1 relative">
       <View>
@@ -99,16 +106,7 @@ function HomeScreen() {
               .required("Email is not empty"),
           })}
           onSubmit={async (values) => {
-            apiInstance
-              .post("/auth/signup", values, {
-                headers: { "x-gigawatts": "1.21" },
-              })
-              .then((res) => {
-                showToast("Create account successfully!");
-                setTimeout(() => {
-                  navigation.navigate("LogIn");
-                }, 3000);
-              });
+            dispatch(registerAccount(values));
           }}
         >
           {({
