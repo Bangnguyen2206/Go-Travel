@@ -4,7 +4,7 @@ import { setDataToStorage } from "../utils/utils";
 import { create } from "apisauce";
 
 const accessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjg5ODQwNjAwLCJleHAiOjE2ODk5MzA2MDB9.pWQQXwJoyAKI7XCqpPW6yGUIn5ztAMxBWyAAs0OlSCc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjg5ODQzMDY2LCJleHAiOjE2ODk5MzMwNjZ9.yMO-wUJq8wx8gIopSc1rAzRUDu1ELiBW1CFEr1MuomA";
 
 export const getCategories = createAsyncThunk("categories", async () => {
   const api = create({

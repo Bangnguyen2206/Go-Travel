@@ -1,16 +1,16 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
+import { useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CheckBox } from "react-native-elements";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { create } from "apisauce";
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import Toast from "react-native-toast-message";
+import { useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -23,8 +23,8 @@ import {
 
 import CustomInput from "../components/CustomInput/CustomInput";
 import Connect from "../components/ListIcon/Connect";
-import { BgImage } from "../assets";
 import apiInstance from "../helpers/httpClient";
+import { BgImage } from "../assets";
 import { registerAccount } from "../reducers/userSlice";
 import { getDataFromStorage } from "../utils/utils";
 
@@ -69,7 +69,6 @@ function HomeScreen() {
     });
     const getData = async () => {
       const data = await getDataFromStorage("user");
-      console.log(data);
     };
     getData();
   }, []);
@@ -187,7 +186,12 @@ function HomeScreen() {
                   containerStyle={{
                     borderRadius: "5px",
                   }}
-                  disabled={isLoading}
+                  disabled={
+                    errors.email ||
+                    errors.firstName ||
+                    errors.lastName ||
+                    errors.password
+                  }
                 >
                   {isLoading && (
                     <ActivityIndicator
@@ -208,9 +212,11 @@ function HomeScreen() {
           <Text className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
             Already have an account?
           </Text>
-          <Text className="block mb-2 mx-2 text-base font-medium text-[#a78bfa] dark:text-white">
-            Sign in instead
-          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("LogIn")}>
+            <Text className="block mb-2 mx-2 text-base font-medium text-[#a78bfa] dark:text-white">
+              Sign in instead
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.barrier}></View>
         <Connect />

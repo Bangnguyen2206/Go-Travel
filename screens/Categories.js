@@ -28,11 +28,11 @@ export default function Categories() {
   const { categories, isLoading } = useSelector(
     (state) => state.categoriesSlice
   );
-
   useEffect(() => {
     dispatch(getCategories());
     const getData = async () => {
       const data = await getDataFromStorage("accessToken");
+      console.log(data);
     };
     getData();
   }, [dispatch]);
