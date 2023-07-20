@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Register from "./screens/Register";
 import LogIn from "./screens/Login";
-import Discover from "./screens/Discover";
 import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();

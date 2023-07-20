@@ -2,14 +2,13 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BgImage } from "../assets";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
 import { CheckBox } from "react-native-elements";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
+import { create } from "apisauce";
 import { Formik } from "formik";
-import Connect from "../components/ListIcon/Connect";
 import Toast from "react-native-toast-message";
 import {
   View,
@@ -19,7 +18,10 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-import { create } from "apisauce";
+
+import CustomInput from "../components/CustomInput/CustomInput";
+import Connect from "../components/ListIcon/Connect";
+import { BgImage } from "../assets";
 
 const styles = StyleSheet.create({
   input: {
@@ -77,10 +79,10 @@ function HomeScreen() {
           animation="fadeIn"
           easing="ease-in-out"
           source={BgImage}
-          className="w-full h-[180px] object-cover"
+          className="w-full h-[150px] object-cover"
         />
       </View>
-      <View className="mx-5 mt-10">
+      <View className="mx-5 mt-5">
         <Text className="text-lg">Adventure starts here</Text>
         <Text className="text-base font-light">
           Make your app management easy and fun
@@ -101,6 +103,7 @@ function HomeScreen() {
               .required("Email is not empty"),
           })}
           onSubmit={async (values) => {
+            console.log(values);
             api
               .post("/auth/signup", values, {
                 headers: { "x-gigawatts": "1.21" },
@@ -122,91 +125,76 @@ function HomeScreen() {
             touched,
           }) => (
             <View className="my-2">
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                First name <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("firstName")}
-                onBlur={handleBlur("firstName")}
+              {/* First name */}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.firstName}
+                errors={errors.firstName}
+                title={"First name"}
+                id="firstName"
+                touched={touched.firstName}
+                required={true}
                 placeholder="Enter your first name..."
               />
-              {touched.firstName && errors.firstName && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.firstName}
-                </Text>
-              )}
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Last name <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("lastName")}
-                onBlur={handleBlur("lastName")}
+              {/* Last name */}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.lastName}
+                errors={errors.lastName}
+                title={"Last name"}
+                touched={touched.lastName}
+                required={true}
+                id="lastName"
                 placeholder="Enter your last name..."
               />
-              {touched.lastName && errors.lastName && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.lastName}
-                </Text>
-              )}
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Email <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
+              {/* Email */}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.email}
+                errors={errors.email}
+                title={"Email"}
+                id="email"
+                touched={touched.email}
+                required={true}
                 placeholder="Enter your email..."
               />
-              {touched.email && errors.email && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.email}
-                </Text>
-              )}
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Password <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
+              {/* Password */}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.password}
+                errors={errors.password}
+                title={"Password"}
+                id="password"
+                touched={touched.password}
+                required={true}
                 placeholder="Enter your password..."
-                secureTextEntry={true}
+                type="password"
               />
-              {touched.password && errors.password && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.password}
-                </Text>
-              )}
+              {/* Sign up button */}
               <View className="mt-7">
-                <Button onPress={handleSubmit} title="Sign Up" color="purple" />
+                <Button
+                  onPress={handleSubmit}
+                  color={"#a78bfa"}
+                  title="Sign up"
+                  containerStyle={{
+                    borderRadius: "5px",
+                  }}
+                />
               </View>
             </View>
           )}
         </Formik>
 
+        {/* Redirect to login page */}
         <View className="mt-3 my-5 flex justify-center items-center flex-row">
-          <Text className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <Text className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
             Already have an account?
           </Text>
-          <Text className="block mb-2 mx-2 text-lg font-medium text-purple-900 dark:text-white">
+          <Text className="block mb-2 mx-2 text-base font-medium text-[#a78bfa] dark:text-white">
             Sign in instead
           </Text>
         </View>

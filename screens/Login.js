@@ -1,17 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useLayoutEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { BgImage } from "../assets";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
+import { useNavigation } from "@react-navigation/native";
+import { useLayoutEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { Formik } from "formik";
 import Toast from "react-native-toast-message";
-import CheckBox from "../components/Checkbox/Checkbox";
 import { create } from "apisauce";
-import Connect from "../components/ListIcon/Connect";
+import { SparklesIcon } from "react-native-heroicons/solid";
 import {
   View,
   Text,
@@ -21,7 +19,11 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { SparklesIcon } from "react-native-heroicons/solid";
+
+import Connect from "../components/ListIcon/Connect";
+import CheckBox from "../components/Checkbox/Checkbox";
+import { BgImage } from "../assets";
+import CustomInput from "../components/CustomInput/CustomInput";
 
 const styles = StyleSheet.create({
   input: {
@@ -100,8 +102,6 @@ function LogIn() {
             email: "",
           }}
           validationSchema={Yup.object({
-            firstName: Yup.string().required("Firstname is not empty"),
-            lastName: Yup.string().required("Lastname is not empty"),
             email: Yup.string()
               .email("Invalid email")
               .required("Email is not empty"),
@@ -119,24 +119,17 @@ function LogIn() {
             touched,
           }) => (
             <View className="my-4">
-              <Text className="block text-base font-medium text-gray-500 dark:text-white">
-                Email <Text className="text-red-600">*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.email}
+                errors={errors.email}
+                title={"Email"}
+                touched={touched.email}
+                required={true}
+                id="email"
                 placeholder="Enter your email..."
               />
-              {touched.email && errors.email && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.email}
-                </Text>
-              )}
               <View className="flex-1 justify-between items-center flex-row mt-4 mb-2">
                 <Text className="block text-base font-medium text-gray-500 dark:text-white">
                   Password <Text className="text-red-600">*</Text>
