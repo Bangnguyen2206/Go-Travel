@@ -2,14 +2,16 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LogInImage } from "../assets";
+import { BgImage } from "../assets";
 import * as Animatable from "react-native-animatable";
 import * as Yup from "yup";
-import { CheckBox } from "react-native-elements";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { Formik } from "formik";
 import Toast from "react-native-toast-message";
+import CheckBox from "../components/Checkbox/Checkbox";
+import { create } from "apisauce";
+import Connect from "../components/ListIcon/Connect";
 import {
   View,
   Text,
@@ -17,8 +19,8 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  Pressable,
 } from "react-native";
-import { create } from "apisauce";
 import { SparklesIcon } from "react-native-heroicons/solid";
 
 const styles = StyleSheet.create({
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 0,
     marginVertical: 10,
-    borderColor: "purple",
+    borderColor: "#78716c",
     color: "black",
     borderRadius: 5,
     paddingHorizontal: 7,
@@ -41,6 +43,11 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  barrier: {
+    height: 0.5,
+    width: "100%",
+    backgroundColor: "#78716c",
   },
 });
 
@@ -69,21 +76,18 @@ function LogIn() {
     password: "",
     email: "",
   });
+  const [music, setMusic] = useState(false);
   return (
     <View className="relative w-full h-full">
       <View>
         <Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={LogInImage}
+          source={BgImage}
           className="w-full h-[300px]"
-        ></Image>
-        {/* <SparklesIcon
-          className="absolute top-0 left-0"
-          onPress={() => navigation.navigate("Home")}
-        /> */}
+        />
       </View>
-      <View className="bg-white py-4 px-10 h-full blur-sm">
+      <View className="bg-bgColor py-4 px-10 h-full blur-sm">
         <Text className="text-xl mb-2">
           Welcome to Entrance Test Interview!
         </Text>
@@ -114,9 +118,9 @@ function LogIn() {
             errors,
             touched,
           }) => (
-            <View className="my-2">
-              <Text className="block text-lg font-medium text-gray-500 dark:text-white">
-                Email
+            <View className="my-4">
+              <Text className="block text-base font-medium text-gray-500 dark:text-white">
+                Email <Text className="text-red-600">*</Text>
               </Text>
               <TextInput
                 style={styles.input}
@@ -133,9 +137,14 @@ function LogIn() {
                   {errors.email}
                 </Text>
               )}
-              <Text className="block text-lg mt-5 font-medium text-gray-500 dark:text-white">
-                Password
-              </Text>
+              <View className="flex-1 justify-between items-center flex-row mt-4 mb-2">
+                <Text className="block text-base font-medium text-gray-500 dark:text-white">
+                  Password <Text className="text-red-600">*</Text>
+                </Text>
+                <Text className="text-base font-medium text-[#7c3aed]">
+                  Forget password?
+                </Text>
+              </View>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange("password")}
@@ -152,21 +161,40 @@ function LogIn() {
                   {errors.password}
                 </Text>
               )}
+              <View className="my-2">
+                <CheckBox
+                  onPress={() => setMusic(!music)}
+                  title="Remember me"
+                  isChecked={music}
+                />
+              </View>
+
               <View className="mt-7">
-                <Button onPress={handleSubmit} title="Login" color="purple" />
+                <Button
+                  onPress={handleSubmit}
+                  title="Login"
+                  color={"#a78bfa"}
+                  containerStyle={{
+                    borderRadius: "5px",
+                  }}
+                />
               </View>
             </View>
           )}
         </Formik>
 
         <View className="mt-3 my-5 flex justify-center items-center flex-row">
-          <Text className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
-            Already have an account?
+          <Text className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
+            New on our platform?
           </Text>
-          <Text className="block mb-2 mx-2 text-lg font-medium text-purple-900 dark:text-white">
-            Sign in instead
-          </Text>
+          <Pressable onPress={() => navigation.navigate("Register")}>
+            <Text className="block mb-2 mx-2 text-base font-medium text-[#7c3aed] dark:text-white">
+              Create an account
+            </Text>
+          </Pressable>
         </View>
+        <View style={styles.barrier}></View>
+        <Connect />
       </View>
     </View>
   );

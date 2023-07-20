@@ -9,6 +9,7 @@ import { CheckBox } from "react-native-elements";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { Formik } from "formik";
+import Connect from "../components/ListIcon/Connect";
 import Toast from "react-native-toast-message";
 import {
   View,
@@ -36,6 +37,11 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  barrier: {
+    height: 0.5,
+    width: "100%",
+    backgroundColor: "#78716c",
   },
 });
 
@@ -204,6 +210,8 @@ function HomeScreen() {
             Sign in instead
           </Text>
         </View>
+        <View style={styles.barrier}></View>
+        <Connect />
       </View>
     </SafeAreaView>
   );

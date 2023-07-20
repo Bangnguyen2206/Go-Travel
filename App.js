@@ -1,7 +1,7 @@
 import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen";
+import Register from "./screens/Register";
 import LogIn from "./screens/Login";
 import Discover from "./screens/Discover";
 import Toast from "react-native-toast-message";
@@ -13,7 +13,7 @@ export default function App() {
     <TailwindProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="LogIn" component={LogIn} />
         </Stack.Navigator>
       </NavigationContainer>
