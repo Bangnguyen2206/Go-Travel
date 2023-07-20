@@ -2,5 +2,5 @@ export { default as BgImage } from "./cloud-computing-modern-flat-concept-for-we
 export { default as Avatar } from "./avatar.png";
 export { default as Hotels } from "./hotel.png";
 export { default as Attractions } from "./attraction.png";
-export { default as Restaurants } from "./restaurants.png";
+export { default as BgCategories } from "./photo-1501196354995-cbb51c65aaea.avif";
 export { default as LogInImage } from "./photo-1494790108377-be9c29b29330.avif";
