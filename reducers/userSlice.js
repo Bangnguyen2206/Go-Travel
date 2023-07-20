@@ -14,6 +14,21 @@ export const registerAccount = createAsyncThunk("register", async (values) => {
   }
 });
 
+export const loginAccount = createAsyncThunk("login", async (values) => {
+  try {
+    const response = await apiInstance.post("/auth/signin", values);
+    if (response.data) {
+      setDataToStorage(
+        "accessToken",
+        JSON.stringify(response.data.accessToken)
+      );
+    }
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -29,6 +44,16 @@ export const userSlice = createSlice({
       state.isLoading = false;
     },
     [registerAccount.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [loginAccount.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [loginAccount.fulfilled]: (state, action) => {
+      state.user = action.payload;
+      state.isLoading = false;
+    },
+    [loginAccount.rejected]: (state) => {
       state.isLoading = false;
     },
   },

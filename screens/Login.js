@@ -7,8 +7,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@rneui/themed";
 import { useFormik } from "formik";
 import { Formik } from "formik";
-import Toast from "react-native-toast-message";
 import { create } from "apisauce";
+import Toast from "react-native-toast-message";
 import { SparklesIcon } from "react-native-heroicons/solid";
 import {
   View,
@@ -19,11 +19,13 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import Connect from "../components/ListIcon/Connect";
 import CheckBox from "../components/Checkbox/Checkbox";
 import { BgImage } from "../assets";
 import CustomInput from "../components/CustomInput/CustomInput";
+import { loginAccount } from "../reducers/userSlice";
 
 const styles = StyleSheet.create({
   input: {
@@ -54,33 +56,28 @@ const styles = StyleSheet.create({
 });
 
 function LogIn() {
-  const api = create({
-    baseURL: "http://streaming.nexlesoft.com:3001",
-    headers: { Accept: "application/vnd.github.v3+json" },
-  });
-
   const navigation = useNavigation();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+  const dispatch = useDispatch();
+  const { user, isLoading } = useSelector((state) => state.userSlice);
   const showToast = (message) => {
     Toast.show({
       type: "success",
-      text1: "Sign Up",
+      text1: "Sign In",
       text2: message,
     });
   };
   const [initialState, setInitialState] = useState({
-    firstName: "",
-    lastName: "",
     password: "",
     email: "",
   });
   const [music, setMusic] = useState(false);
   return (
-    <View className="relative w-full h-full">
+    <View>
       <View>
         <Image
           animation="fadeIn"
@@ -106,8 +103,13 @@ function LogIn() {
               .email("Invalid email")
               .required("Email is not empty"),
           })}
-          onSubmit={async (values) => {
-            console.log(values);
+          onSubmit={async (values, { resetForm }) => {
+            dispatch(loginAccount(values));
+            resetForm();
+            showToast("Logged in account successfully!");
+            setTimeout(() => {
+              navigation.navigate("Categories");
+            }, 3000);
           }}
         >
           {({
@@ -130,30 +132,19 @@ function LogIn() {
                 id="email"
                 placeholder="Enter your email..."
               />
-              <View className="flex-1 justify-between items-center flex-row mt-4 mb-2">
-                <Text className="block text-base font-medium text-gray-500 dark:text-white">
-                  Password <Text className="text-red-600">*</Text>
-                </Text>
-                <Text className="text-base font-medium text-[#7c3aed]">
-                  Forget password?
-                </Text>
-              </View>
-              <TextInput
-                style={styles.input}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
+              <CustomInput
+                handleChange={handleChange}
+                handleBlur={handleBlur}
                 value={values.password}
+                errors={errors.password}
+                title={"Password"}
+                id="password"
+                touched={touched.password}
+                required={true}
                 placeholder="Enter your password..."
-                secureTextEntry={true}
+                type="password"
+                checkPassword={true}
               />
-              {touched.password && errors.password && (
-                <Text
-                  style={{ fontSize: 12, color: "#FF0D10" }}
-                  className="mb-2"
-                >
-                  {errors.password}
-                </Text>
-              )}
               <View className="my-2">
                 <CheckBox
                   onPress={() => setMusic(!music)}

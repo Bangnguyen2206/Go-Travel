@@ -34,6 +34,7 @@ const CustomInput = ({
   placeholder,
   id,
   type = "text",
+  checkPassword = false,
 }) => {
   const [showPassword, setShowPassword] = useState(true);
   const [iconName, setIconName] = useState("eye-off");
@@ -47,9 +48,17 @@ const CustomInput = ({
   };
   return (
     <View>
-      <Text className="block text-base font-medium text-gray-500 dark:text-white">
-        {title} {required && <Text className="text-red-600">*</Text>}
-      </Text>
+      <View className="flex-1 justify-between items-center flex-row">
+        <Text className="block text-base font-medium text-gray-500 dark:text-white">
+          {title} {required && <Text className="text-red-600">*</Text>}
+        </Text>
+        {checkPassword && (
+          <Text className="text-base font-medium text-[#7c3aed]">
+            Forget password?
+          </Text>
+        )}
+      </View>
+
       <View className="relative">
         <TextInput
           style={styles.input}

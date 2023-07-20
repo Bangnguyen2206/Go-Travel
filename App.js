@@ -7,10 +7,15 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import Register from "./screens/Register";
 import LogIn from "./screens/Login";
+import Categories from "./screens/Categories";
 import userSliceReducer from "./reducers/userSlice";
+import categoriesSliceReducer from "./reducers/categoriesSlice";
 
 const store = configureStore({
-  reducer: { userSlice: userSliceReducer },
+  reducer: {
+    userSlice: userSliceReducer,
+    categoriesSlice: categoriesSliceReducer,
+  },
 });
 
 const Stack = createNativeStackNavigator();
@@ -23,6 +28,7 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="LogIn" component={LogIn} />
+            <Stack.Screen name="Categories" component={Categories} />
           </Stack.Navigator>
         </NavigationContainer>
         <Toast />
