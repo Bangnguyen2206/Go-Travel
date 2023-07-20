@@ -4,19 +4,18 @@ import { setDataToStorage } from "../utils/utils";
 import { create } from "apisauce";
 
 const accessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjg5ODM5ODcyLCJleHAiOjE2ODk5Mjk4NzJ9.3cgF8VuHdu-rDA52Cq6udz5UZTx3-xBY6EhTwrfWhCg";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIiwiaWF0IjoxNjg5ODQwNjAwLCJleHAiOjE2ODk5MzA2MDB9.pWQQXwJoyAKI7XCqpPW6yGUIn5ztAMxBWyAAs0OlSCc";
 
 export const getCategories = createAsyncThunk("categories", async () => {
   const api = create({
-    baseURL: "http://streaming.nexlesoft.com:3001/categories",
+    baseURL: "http://streaming.nexlesoft.com:3001",
     headers: {
-      Accept: "application/vnd.github.v3+json",
-      Authorization: "Bearer " + accessToken,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   try {
     const response = await api.get("/categories");
-    console.log(response);
+    return response.data;
   } catch (err) {
     console.error(err);
   }
