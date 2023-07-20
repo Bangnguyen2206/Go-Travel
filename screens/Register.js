@@ -22,6 +22,7 @@ import {
 import CustomInput from "../components/CustomInput/CustomInput";
 import Connect from "../components/ListIcon/Connect";
 import { BgImage } from "../assets";
+import apiInstance from "../helpers/httpClient";
 
 const styles = StyleSheet.create({
   input: {
@@ -48,11 +49,6 @@ const styles = StyleSheet.create({
 });
 
 function HomeScreen() {
-  const api = create({
-    baseURL: "http://streaming.nexlesoft.com:3001",
-    headers: { Accept: "application/vnd.github.v3+json" },
-  });
-
   const navigation = useNavigation();
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -103,8 +99,7 @@ function HomeScreen() {
               .required("Email is not empty"),
           })}
           onSubmit={async (values) => {
-            console.log(values);
-            api
+            apiInstance
               .post("/auth/signup", values, {
                 headers: { "x-gigawatts": "1.21" },
               })
