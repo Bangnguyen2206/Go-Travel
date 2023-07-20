@@ -20,6 +20,7 @@ import { getCategories } from "../reducers/categoriesSlice";
 import { getDataFromStorage } from "../utils/utils";
 import { fakeData } from "../fakeData/data";
 import { BgCategories } from "../assets";
+import { setDataToStorage } from "../utils/utils";
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,8 @@ export default function Categories() {
     });
     const getData = async () => {
       const data = await getDataFromStorage("accessToken");
+      const sec = await getDataFromStorage("selections");
+      console.log(sec);
       dispatch(getCategories(data));
     };
     getData();
@@ -77,12 +80,12 @@ export default function Categories() {
           source={BgCategories}
           className="w-full h-[230px] -z-10"
         />
-        <TouchableOpacity
-          className="text-white font-base absolute z-50 bottom-35 right-5 mt-10"
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity className="text-white font-base absolute z-50 bottom-35 right-5 mt-10">
           <Button
             title="Done"
+            onPress={() =>
+              setDataToStorage("selections", JSON.stringify(selections))
+            }
             color={"white"}
             containerStyle={{
               borderRadius: "5px",

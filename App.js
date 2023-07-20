@@ -26,7 +26,7 @@ export default function App() {
       <TailwindProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Register" component={Categories} />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="LogIn" component={LogIn} />
             <Stack.Screen name="Categories" component={Categories} />
           </Stack.Navigator>
