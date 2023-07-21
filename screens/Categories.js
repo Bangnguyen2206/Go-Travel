@@ -21,6 +21,7 @@ import { getDataFromStorage } from "../utils/utils";
 import { fakeData } from "../fakeData/data";
 import { BgCategories } from "../assets";
 import { setDataToStorage } from "../utils/utils";
+import Spinner from "../components/Spinner/Spinner";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +60,10 @@ export default function Categories() {
     }
   };
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <View style={styles.container}>
       <View classname="relative">
@@ -94,7 +99,7 @@ export default function Categories() {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={fakeData}
+        data={categories}
         renderItem={({ item }) => {
           const data = selections.find((data) => data.id === item.id);
           return (

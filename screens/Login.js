@@ -104,6 +104,7 @@ function LogIn() {
             email: Yup.string()
               .email("Invalid email")
               .required("Email is not empty"),
+            password: Yup.string().required("The password is required"),
           })}
           onSubmit={async (values, { resetForm }) => {
             dispatch(loginAccount(values));
