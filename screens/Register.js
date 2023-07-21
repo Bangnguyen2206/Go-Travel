@@ -123,7 +123,7 @@ function HomeScreen() {
               dispatch(registerAccount(values));
               resetForm();
               setRegulation(false);
-              showToast("Created account successfully!");
+              showToast("Successful account registration!");
               setTimeout(() => {
                 navigation.navigate("LogIn");
               }, 3000);

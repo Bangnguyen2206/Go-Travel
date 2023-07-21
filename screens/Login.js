@@ -109,7 +109,7 @@ function LogIn() {
           onSubmit={async (values, { resetForm }) => {
             dispatch(loginAccount(values));
             resetForm();
-            showToast("Logged in account successfully!");
+            showToast("Logged in successfully!");
             setTimeout(() => {
               navigation.navigate("Categories");
             }, 3000);
